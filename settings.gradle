@@ -1,0 +1,2 @@
+include ':groupadapter'
+include ':demo'
