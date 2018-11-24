@@ -7,7 +7,7 @@
 RecyclerView分组Adapter，数据异步或同步加入adapter后，**按照加入组号排列数据，解放异步接口数据排序问题**
 
 ### PREVIEW
-![/preview/001.png] ![/preview/002.png] ![/preview/003.png]
+![](/preview/001.png) ![](/preview/002.png) ![](/preview/003.png)
 
 ### USE by Kotlin
     implementation 'com.uis:groupadapter:0.1.0
