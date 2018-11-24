@@ -3,8 +3,35 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      >
+        <Button android:id="@+id/bt_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add"
+          />
+        <Button android:id="@+id/bt_adds"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Adds"
+          />
+        <Button android:id="@+id/bt_remove"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Remove"
+          />
+        <Button android:id="@+id/bt_clear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Clear"
+          />
+    </LinearLayout>
     <android.support.v7.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+      android:id="@+id/recyclerView"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
     </android.support.v7.widget.RecyclerView>
 </LinearLayout>
