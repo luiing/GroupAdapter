@@ -4,13 +4,15 @@ import android.support.v7.widget.RecyclerView
 import android.util.Log
 import kotlin.collections.ArrayList
 
-private const val TAG = "GroupAdapter"
-
-abstract class GroupAdapter :RecyclerView.Adapter<GroupHolder<out Any>>() {
+abstract class GroupAdapter() :RecyclerView.Adapter<GroupHolder<out Any>>(){
 
     var data :MutableList<MutableList<GroupEntity>> = ArrayList()
     var total = 0
     var groupNo = 0
+
+    init {
+        initGroup(1)
+    }
 
     override fun getItemCount():Int = total
 
@@ -25,14 +27,25 @@ abstract class GroupAdapter :RecyclerView.Adapter<GroupHolder<out Any>>() {
         }
     }
 
+    /**
+     * 初始化或重置组
+     * @param group 组号
+     */
     fun initGroup(groupSize :Int){
-        if(groupNo <= 0) {
-            groupNo = groupSize
-            for (i in 0..(groupSize - 1)) {
-                data.add(ArrayList())
+        groupNo = groupSize
+        if(data.size > 0){
+            val count = total
+            total = 0
+            for (item in data) {
+                item.clear()
             }
-        }else{
-            Log.w(TAG,"$TAG has already init")
+            data.clear()
+            if(count > 0) {
+                notifyDataSetChanged()
+            }
+        }
+        for (i in 0..(groupSize - 1)) {
+            data.add(ArrayList())
         }
     }
 
@@ -77,6 +90,27 @@ abstract class GroupAdapter :RecyclerView.Adapter<GroupHolder<out Any>>() {
         }
     }
 
+    /**
+     * 移出全局的位置
+     * @param positon 全局位置
+     */
+    fun removePositonEntity(positon: Int){
+        var size = 0
+        for(item in data){
+            val itemSize = item.size
+            if(positon < size + itemSize){
+                item.removeAt(positon-size)
+                total -= 1
+                notifyItemRemoved(positon)
+                break
+            }
+            size += itemSize
+        }
+    }
+
+    /**
+     * 清除所有数据
+     */
     fun clearAllEntity(){
         total = 0
         for (item in data){
@@ -85,11 +119,37 @@ abstract class GroupAdapter :RecyclerView.Adapter<GroupHolder<out Any>>() {
         notifyDataSetChanged()
     }
 
+    /**
+     * 获取组开使的位置
+     * @param group 组号
+     */
+    fun getPositon(group: Int) :Int{
+        var position = 0
+        if(isValid(group)){
+            for(i in 0..(group-1)){
+                position += data[i].size
+            }
+        }
+        return position
+    }
+
+    /**
+     * 获取组大小
+     * @param group 组号
+     */
+    fun getSize(group: Int):Int{
+        var size = 0
+        if(isValid(group)){
+            size = data[group].size
+        }
+        return size
+    }
+
     private fun isValid(group :Int):Boolean{
         if(groupNo > 0 && group < groupNo && group >= 0){
             return true
         }else{
-            Log.w(TAG,"$group outof groupSize $groupNo")
+            Log.w("Adapter","Group index $group outof groupSize $groupNo")
             return false
         }
     }
