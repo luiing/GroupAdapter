@@ -5,6 +5,7 @@ apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion compileVer
+    buildToolsVersion buildToolsVer
     defaultConfig {
         minSdkVersion minSdkVer
         targetSdkVersion compileVer
@@ -24,8 +25,5 @@ dependencies {
     compileOnly "com.android.support:recyclerview-v7:$supportVer"
     compileOnly "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
-repositories {
-    mavenCentral()
-}
 
-//apply from: '../../../bintraykt.gradle'
+//apply from: '../../../bintray.gradle'

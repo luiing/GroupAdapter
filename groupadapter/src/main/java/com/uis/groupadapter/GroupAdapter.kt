@@ -25,6 +25,10 @@ abstract class GroupAdapter :RecyclerView.Adapter<GroupHolder<out Any>>() {
         }
     }
 
+    /**
+     * 初始化组
+     * @param group 组号
+     */
     fun initGroup(groupSize :Int){
         if(groupNo <= 0) {
             groupNo = groupSize
@@ -34,6 +38,16 @@ abstract class GroupAdapter :RecyclerView.Adapter<GroupHolder<out Any>>() {
         }else{
             Log.w(TAG,"$TAG has already init")
         }
+    }
+
+    /**
+     * 重制组
+     * @param group 组号
+     */
+    fun resetGroup(groupSize :Int){
+        clearAllEntity()
+        groupNo = 0
+        initGroup(groupSize)
     }
 
     fun addEntity(entity :GroupEntity) =addEntity(0,entity)
@@ -77,12 +91,56 @@ abstract class GroupAdapter :RecyclerView.Adapter<GroupHolder<out Any>>() {
         }
     }
 
+    /**
+     * 移出全局的位置
+     * @param positon 全局位置
+     */
+    fun removePositonEntity(positon: Int){
+        var size = 0
+        for(item in data){
+            val itemSize = item.size
+            if(positon < size + itemSize){
+                item.removeAt(positon-size)
+                total -= 1
+                notifyItemRemoved(positon)
+                break
+            }
+            size += itemSize
+        }
+    }
+
     fun clearAllEntity(){
         total = 0
         for (item in data){
             item.clear()
         }
         notifyDataSetChanged()
+    }
+
+    /**
+     * 获取组开使的位置
+     * @param group 组号
+     */
+    fun getPositon(group: Int) :Int{
+        var position = 0
+        if(isValid(group)){
+            for(i in 0..(group-1)){
+                position += data[i].size
+            }
+        }
+        return position
+    }
+
+    /**
+     * 获取组大小
+     * @param group 组号
+     */
+    fun getSize(group: Int):Int{
+        var size = 0
+        if(isValid(group)){
+            size = data[group].size
+        }
+        return size
     }
 
     private fun isValid(group :Int):Boolean{

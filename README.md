@@ -41,9 +41,13 @@ RecyclerView分组Adapter，数据异步或同步加入adapter后，**按照加�
 
 ```
 fun initGroup(groupSize :Int)//初始化分组个数
+fun resetGroup(groupSize :Int)//重制
 fun addEntity(group :Int,entity :GroupEntity)//加入数据到第group个分组，group范围[0,groupSize-1]
 fun removeEntity(group :Int)//移除分组数据
 fun clearAllEntity()//移除所有数据
+fun removePositonEntity(positon: Int)//移出制定位置（RecyclerView中位置）
+fun getPositon(group: Int)//获取该组开始position
+fun getSize(group: Int)//获取该组大小
 ```
 
 
@@ -52,6 +56,7 @@ fun clearAllEntity()//移除所有数据
 Version|Descipt|Fixed|Time
 ----|----|----|----
 0.1.0|初始版本| |2018/11/24
+0.2.0|增加函数| |2018/11/27
 
 ### LICENSE
 MIT License
