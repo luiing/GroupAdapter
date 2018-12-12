@@ -7,6 +7,11 @@
 RecyclerView分组Adapter，数据异步或同步加入adapter后，**按照加入组号排列数据，解放异步接口数据排序问题**
 
 ### PREVIEW
+RecyclerView分组Adapter，数据异步或同步加入adapter后，按照加入组号排列数据，解放异步接口数据排序问题
+    <li>此处相同颜色为一组，下图分为3组，序号为Add顺序，显示按照颜色排列
+    <li>图2通过删除一组后的结果，图三重新添加了几组数据
+    <li>**分组根据 接口个数和UI顺序决定，需要灵活使用**
+
 ![](/preview/001.png) ![](/preview/002.png) ![](/preview/003.png)
 
 ### USE by Kotlin
