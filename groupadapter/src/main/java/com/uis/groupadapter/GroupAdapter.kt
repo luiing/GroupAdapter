@@ -5,12 +5,15 @@ import android.util.Log
 import kotlin.collections.ArrayList
 
 private const val TAG = "GroupAdapter"
-
-abstract class GroupAdapter :RecyclerView.Adapter<GroupHolder<out Any>>() {
+abstract class GroupAdapter() :RecyclerView.Adapter<GroupHolder<out Any>>(){
 
     var data :MutableList<MutableList<GroupEntity>> = ArrayList(6)
     var total = 0
     var groupNo = 0
+
+    init {
+        initGroup(1)
+    }
 
     override fun getItemCount():Int = total
 
@@ -26,28 +29,24 @@ abstract class GroupAdapter :RecyclerView.Adapter<GroupHolder<out Any>>() {
     }
 
     /**
-     * 初始化组,组号范围[0,size-1]
+     * 初始化或重置组,组号范围[0,size-1]
      * @param group 组号
      */
     fun initGroup(size :Int){
-        if(groupNo <= 0) {
-            groupNo = size
-            for (i in 0..(size - 1)) {
-                data.add(ArrayList(8))
+        groupNo = size
+        if(data.size > 0){
+            for (item in data) {
+                item.clear()
             }
-        }else{
-            Log.w(TAG,"$TAG has already init")
+            data.clear()
+            if(total > 0) {
+                total = 0
+                notifyDataSetChanged()
+            }
         }
-    }
-
-    /**
-     * 重制组
-     * @param size 组容量<=最大组号
-     */
-    fun resetGroup(size :Int){
-        clearAllEntity()
-        groupNo = 0
-        initGroup(size)
+        for (i in 0 until size) {
+            data.add(ArrayList(8))
+        }
     }
 
     fun addEntity(entity :GroupEntity) =addEntity(0,entity)
@@ -159,7 +158,7 @@ abstract class GroupAdapter :RecyclerView.Adapter<GroupHolder<out Any>>() {
      */
     fun removePositonEntity(position: Int){
         var size = 0
-        for(item in data){//5,5,5 10
+        for(item in data){
             size += item.size
             if(position < size){
                 item.removeAt(position-(size-item.size))
@@ -170,6 +169,9 @@ abstract class GroupAdapter :RecyclerView.Adapter<GroupHolder<out Any>>() {
         }
     }
 
+    /**
+     * 清除所有数据
+     */
     fun clearAllEntity(){
         total = 0
         for (item in data){
@@ -213,14 +215,16 @@ abstract class GroupAdapter :RecyclerView.Adapter<GroupHolder<out Any>>() {
         }
     }
 
-    private fun getEntity(position:Int):GroupEntity? {
+    /** 获取Entity
+     * @param positon adapterPosition
+     */
+    private fun getEntity(positon:Int):GroupEntity? {
         var size = 0
         for(item in data){
-            val itemSize = item.size
-            if(position < size + itemSize){
-                return item[position - size]
+            size += item.size
+            if(positon < size){
+                return item[positon - (size-item.size)]
             }
-            size += itemSize
         }
         return null
     }
