@@ -8,7 +8,7 @@ android {
     buildToolsVersion buildToolsVer
     defaultConfig {
         minSdkVersion minSdkVer
-        targetSdkVersion compileVer
+        targetSdkVersion targetVer
         versionCode 1
         versionName "1.0"
     }
@@ -26,4 +26,4 @@ dependencies {
     compileOnly "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
 
-//apply from: '../../../bintray.gradle'
+apply from: '../../../bintray.gradle'
