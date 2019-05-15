@@ -4,9 +4,10 @@ import android.support.v7.widget.RecyclerView
 import android.util.Log
 import kotlin.collections.ArrayList
 
+private const val TAG = "GroupAdapter"
 abstract class GroupAdapter() :RecyclerView.Adapter<GroupHolder<out Any>>(){
 
-    var data :MutableList<MutableList<GroupEntity>> = ArrayList()
+    var data :MutableList<MutableList<GroupEntity>> = ArrayList(6)
     var total = 0
     var groupNo = 0
 
@@ -28,24 +29,23 @@ abstract class GroupAdapter() :RecyclerView.Adapter<GroupHolder<out Any>>(){
     }
 
     /**
-     * 初始化或重置组
+     * 初始化或重置组,组号范围[0,size-1]
      * @param group 组号
      */
-    fun initGroup(groupSize :Int){
-        groupNo = groupSize
+    fun initGroup(size :Int){
+        groupNo = size
         if(data.size > 0){
-            val count = total
-            total = 0
             for (item in data) {
                 item.clear()
             }
             data.clear()
-            if(count > 0) {
+            if(total > 0) {
+                total = 0
                 notifyDataSetChanged()
             }
         }
-        for (i in 0..(groupSize - 1)) {
-            data.add(ArrayList())
+        for (i in 0 until size) {
+            data.add(ArrayList(8))
         }
     }
 
@@ -77,6 +77,68 @@ abstract class GroupAdapter() :RecyclerView.Adapter<GroupHolder<out Any>>(){
         }
     }
 
+    /** 更新全局position位置
+     * @param position 全局position
+     */
+    fun changePositionEntity(position: Int,entity: GroupEntity){
+        var size = 0
+        for(item in data){
+            size += item.size
+            if(position < size ){
+                item.set(position-(size-item.size),entity)
+                notifyItemChanged(position)
+                break
+            }
+        }
+    }
+
+    fun changeEntity(entity: GroupEntity)=changeEntity(0,entity)
+
+    /** 更新组号下第0个位置数据，此组无数据不更新
+     * @param group组号
+     * @param entity
+     */
+    fun changeEntity(group: Int,entity: GroupEntity){
+        if(isValid(group)){
+            val gp = data[group]
+            if(gp.size > 0) {
+                var position = 0
+                for(i in 0 until group){
+                    position += data[i].size
+                }
+                gp.set(0,entity)
+                notifyItemChanged(position)
+            }
+        }
+    }
+
+    fun changeEntity(entities :MutableList<GroupEntity>)=changeEntity(0,entities)
+
+    /**
+     * 替换组号下列表
+     * @param group 组号
+     * @param entities
+     */
+    fun changeEntity(group :Int,entities :MutableList<GroupEntity>){
+        if(isValid(group)){
+            var position = 0
+            for(i in 0 until group){
+                position += data[i].size
+            }
+            val groupItem = data[group]
+            val lastSize = groupItem.size
+            val newSize = entities.size
+            groupItem.clear()
+            groupItem.addAll(entities)
+            if(lastSize == newSize){
+                notifyItemRangeChanged(position,newSize)
+            }else{
+                total += newSize - lastSize
+                notifyDataSetChanged()
+            }
+        }
+    }
+
     fun removeEntity(group :Int){
         if(isValid(group)){
             var position = 0
@@ -94,17 +156,16 @@ abstract class GroupAdapter() :RecyclerView.Adapter<GroupHolder<out Any>>(){
      * 移出全局的位置
      * @param positon 全局位置
      */
-    fun removePositonEntity(positon: Int){
+    fun removePositonEntity(position: Int){
         var size = 0
         for(item in data){
-            val itemSize = item.size
-            if(positon < size + itemSize){
-                item.removeAt(positon-size)
+            size += item.size
+            if(position < size){
+                item.removeAt(position-(size-item.size))
                 total -= 1
-                notifyItemRemoved(positon)
+                notifyItemRemoved(position)
                 break
             }
-            size += itemSize
         }
     }
 
@@ -149,19 +210,21 @@ abstract class GroupAdapter() :RecyclerView.Adapter<GroupHolder<out Any>>(){
         if(groupNo > 0 && group < groupNo && group >= 0){
             return true
         }else{
-            Log.w("Adapter","Group index $group outof groupSize $groupNo")
+            Log.w(TAG,"$group outof groupSize $groupNo")
             return false
         }
     }
 
+    /** 获取Entity
+     * @param positon adapterPosition
+     */
     private fun getEntity(positon:Int):GroupEntity? {
         var size = 0
         for(item in data){
-            val itemSize = item.size
-            if(positon < size + itemSize){
-                return item[positon - size]
+            size += item.size
+            if(positon < size){
+                return item[positon - (size-item.size)]
             }
-            size += itemSize
         }
         return null
     }
