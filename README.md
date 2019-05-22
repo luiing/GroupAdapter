@@ -6,6 +6,14 @@
 
 RecyclerView分组Adapter，数据异步或同步加入adapter后，**按照加入组号排列数据，解放异步接口数据排序问题**
 
+### 吸顶解决方案(demo模块)
+    1. Single RecyclerView：简单模式【利用RecyclerView.OnScrollListener监听滑动位置，吸顶View被 ViewHolder和Activity复用】
+    
+    2. Double RecyclerView：RecyclerView嵌套RecyclerView【事件分发，吸顶View是个单独ViewHolder,无须做其他处理】
+    
+    3. Viewpager RecyclerView:RecyclerView嵌套ViewPager(其中包含的页面内容是RecyclerView)【事件分发，吸顶View是个单独ViewHolder,无须做其他处理】
+    
+
 ### PREVIEW
 ![](/preview/001.png) ![](/preview/002.png) ![](/preview/003.png)
 
