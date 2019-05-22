@@ -11,6 +11,9 @@ android {
         targetSdkVersion targetVer
         versionCode 1
         versionName "1.0"
+        //ndk{
+             //abiFilters 'x86'//'armeabi-v7a'
+        //}
     }
 
     buildTypes {
@@ -28,6 +31,6 @@ dependencies {
     implementation 'com.android.support:appcompat-v7:'+supportVer
     implementation 'com.android.support:recyclerview-v7:'+supportVer
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    api 'com.facebook.fresco:fresco:1.9.0'
+    //api 'com.facebook.fresco:fresco:1.13.0'
     implementation project(':groupadapter')
 }
