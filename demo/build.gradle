@@ -31,6 +31,6 @@ dependencies {
     implementation 'com.android.support:appcompat-v7:'+supportVer
     implementation 'com.android.support:recyclerview-v7:'+supportVer
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    //api 'com.facebook.fresco:fresco:1.13.0'
+    api 'com.uis:adsorbent:0.1.1'
     implementation project(':groupadapter')
 }
