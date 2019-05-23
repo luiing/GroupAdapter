@@ -10,7 +10,9 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
                 <action android:name="android.intent.action.VIEW"/>
             </intent-filter>
-
         </activity>
+        <activity android:name=".SingleRecyclerUi"/>
+        <activity android:name=".DoubleRecyclerUi"/>
+        <activity android:name=".ViewpagerRecyclerUi"/>
     </application>
 </manifest>
