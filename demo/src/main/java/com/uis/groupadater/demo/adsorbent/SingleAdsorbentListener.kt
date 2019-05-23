@@ -1,12 +1,11 @@
-package com.uis.groupadater.demo.test
+package com.uis.groupadater.demo.adsorbent
 
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 
-abstract class OnPinListener : RecyclerView.OnScrollListener(){
+abstract class SingleAdsorbentListener : RecyclerView.OnScrollListener(){
 
     /** 获取被吸顶ViewGroup*/
     abstract fun getUiViewGroup():ViewGroup

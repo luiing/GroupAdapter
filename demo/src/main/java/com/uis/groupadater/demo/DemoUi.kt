@@ -3,15 +3,7 @@ package com.uis.groupadater.demo
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
-import android.view.View
-import android.view.ViewGroup
-import com.uis.groupadapter.GroupEntity
-import com.uis.groupadater.demo.holder.*
-import com.uis.groupadater.demo.test.OnPinListener
-import kotlinx.android.synthetic.main.ui_demo.*
 import kotlinx.android.synthetic.main.ui_demo_main.*
-import kotlinx.android.synthetic.main.ui_view_pin.view.*
 
 
 class DemoUi: AppCompatActivity() {

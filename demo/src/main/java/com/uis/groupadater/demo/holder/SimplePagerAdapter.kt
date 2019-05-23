@@ -6,7 +6,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
 import com.uis.groupadapter.GroupEntity
-import com.uis.groupadater.demo.test.ChildRecyclerView
+import com.uis.groupadater.demo.adsorbent.ChildRecyclerView
 import java.util.*
 
 class SimplePagerAdapter : PagerAdapter(){
