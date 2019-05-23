@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.uis.groupadapter.GroupEntity
 import com.uis.groupadater.demo.holder.*
-import com.uis.groupadater.demo.test.OnPinListener
+import com.uis.groupadater.demo.adsorbent.SingleAdsorbentListener
 import kotlinx.android.synthetic.main.ui_demo.*
 import kotlinx.android.synthetic.main.ui_view_pin.view.*
 
@@ -47,7 +47,7 @@ class SingleRecyclerUi: AppCompatActivity() {
         recyclerView.layoutManager = manager
         recyclerView.adapter = adapter
 
-        recyclerView.addOnScrollListener(object : OnPinListener(){
+        recyclerView.addOnScrollListener(object : SingleAdsorbentListener(){
             /** 获取被吸顶ViewGroup*/
             override fun getUiViewGroup(): ViewGroup = relative
             /** 获取吸顶View*/

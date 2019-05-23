@@ -1,4 +1,4 @@
-package com.uis.groupadater.demo.test
+package com.uis.groupadater.demo.adsorbent
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
