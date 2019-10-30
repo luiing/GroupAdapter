@@ -1,9 +1,9 @@
 package com.uis.groupadater.demo
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.uis.groupadapter.GroupEntity
 import com.uis.groupadater.demo.holder.*
 import kotlinx.android.synthetic.main.ui_demo.*
@@ -27,7 +27,6 @@ class ViewpagerRecyclerUi: AppCompatActivity() {
         pin.bt_clear.setOnClickListener{
 
         }
-        adapter.initGroup(10)
         for(i in 0 until 5) {
             adapter.addEntity(GroupEntity(VT_TXT, "txt $i"))
         }

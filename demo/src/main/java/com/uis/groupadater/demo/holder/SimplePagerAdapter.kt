@@ -1,10 +1,11 @@
 package com.uis.groupadater.demo.holder
 
-import android.support.v4.view.PagerAdapter
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager.widget.PagerAdapter
 import com.uis.groupadapter.GroupEntity
 import com.uis.groupadater.demo.adsorbent.ChildRecyclerView
 import java.util.*

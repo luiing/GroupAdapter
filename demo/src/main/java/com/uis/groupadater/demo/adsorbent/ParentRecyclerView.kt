@@ -2,12 +2,12 @@ package com.uis.groupadater.demo.adsorbent
 
 import android.content.Context
 import android.os.SystemClock
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.util.AttributeSet
 import android.view.MotionEvent
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
-class ParentRecyclerView :RecyclerView,OnInterceptListener{
+class ParentRecyclerView : RecyclerView,OnInterceptListener{
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
@@ -113,7 +113,7 @@ class ParentRecyclerView :RecyclerView,OnInterceptListener{
     }
 
     /** 给child view分发*/
-    private fun dispatchChildTouch(manager:LinearLayoutManager,ev: MotionEvent,directUp :Boolean){
+    private fun dispatchChildTouch(manager: LinearLayoutManager, ev: MotionEvent, directUp :Boolean){
         val first = manager.findFirstVisibleItemPosition()
         val total = manager.itemCount - 1
         manager.getChildAt(total - first)?.let {

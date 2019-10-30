@@ -1,12 +1,12 @@
 package com.uis.groupadater.demo.holder
 
-import android.support.v4.view.ViewPager
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.util.TypedValue
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager.widget.ViewPager
 import com.uis.groupadapter.GroupAdapter
 import com.uis.groupadapter.GroupEntity
 import com.uis.groupadapter.GroupHolder
@@ -71,7 +71,7 @@ class ViewPagerVH(parent: ViewGroup) : GroupHolder<String>(R.layout.ui_item_view
         viewpager.layoutParams = p
         viewpager.adapter = SimplePagerAdapter()
 
-        viewpager.addOnPageChangeListener(object :ViewPager.SimpleOnPageChangeListener(){
+        viewpager.addOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener(){
             override fun onPageSelected(p0: Int) {
                 if(parent is RecyclerView){
                     /** 定位到吸顶位置*/
