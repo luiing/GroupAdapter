@@ -1,19 +1,13 @@
 package com.uis.groupadapter
 
-import android.support.v7.widget.RecyclerView
-import android.util.Log
+import androidx.recyclerview.widget.RecyclerView
 import kotlin.collections.ArrayList
 
-private const val TAG = "GroupAdapter"
-abstract class GroupAdapter() :RecyclerView.Adapter<GroupHolder<out Any>>(){
 
-    var data :MutableList<MutableList<GroupEntity>> = ArrayList(6)
+abstract class GroupAdapter: RecyclerView.Adapter<GroupHolder<out Any>>(){
+
+    val data :MutableList<MutableList<GroupEntity>> = ArrayList(6)
     var total = 0
-    var groupNo = 0
-
-    init {
-        initGroup(1)
-    }
 
     override fun getItemCount():Int = total
 
@@ -32,21 +26,9 @@ abstract class GroupAdapter() :RecyclerView.Adapter<GroupHolder<out Any>>(){
      * 初始化或重置组,组号范围[0,size-1]
      * @param group 组号
      */
+    @Deprecated("not need method,it support auto increase capacity")
     fun initGroup(size :Int){
-        groupNo = size
-        if(data.size > 0){
-            for (item in data) {
-                item.clear()
-            }
-            data.clear()
-            if(total > 0) {
-                total = 0
-                notifyDataSetChanged()
-            }
-        }
-        for (i in 0 until size) {
-            data.add(ArrayList(8))
-        }
+        clearAllEntity()
     }
 
     fun addEntity(entity :GroupEntity) =addEntity(0,entity)
@@ -54,27 +36,18 @@ abstract class GroupAdapter() :RecyclerView.Adapter<GroupHolder<out Any>>(){
     fun addEntity(entities :MutableList<GroupEntity>) =addEntity(0,entities)
 
     fun addEntity(group :Int,entity :GroupEntity){
-        if(isValid(group)){
-            var position = 0
-            for(i in 0..group){
-                position += data[i].size
-            }
-            data[group].add(entity)
-            total += 1
-            notifyItemInserted(position)
-        }
+        addEntity(group, mutableListOf(entity))
     }
 
     fun addEntity(group :Int,entities :MutableList<GroupEntity>){
-        if(isValid(group)){
-            var position = 0
-            for(i in 0..group){
-                position += data[i].size
-            }
-            data[group].addAll(entities)
-            total += entities.size
-            notifyItemRangeInserted(position,entities.size)
+        increaseCapacity(group)
+        var position = 0
+        for(i in 0..group){
+            position += data[i].size
         }
+        data[group].addAll(entities)
+        total += entities.size
+        notifyItemRangeInserted(position,entities.size)
     }
 
     /** 更新全局position位置
@@ -99,16 +72,15 @@ abstract class GroupAdapter() :RecyclerView.Adapter<GroupHolder<out Any>>(){
      * @param entity
      */
     fun changeEntity(group: Int,entity: GroupEntity){
-        if(isValid(group)){
-            val gp = data[group]
-            if(gp.size > 0) {
-                var position = 0
-                for(i in 0 until group){
-                    position += data[i].size
-                }
-                gp.set(0,entity)
-                notifyItemChanged(position)
+        increaseCapacity(group)
+        val gp = data[group]
+        if(gp.size > 0) {
+            var position = 0
+            for(i in 0 until group){
+                position += data[i].size
             }
+            gp.set(0,entity)
+            notifyItemChanged(position)
         }
     }
 
@@ -120,36 +92,34 @@ abstract class GroupAdapter() :RecyclerView.Adapter<GroupHolder<out Any>>(){
      * @param entities
      */
     fun changeEntity(group :Int,entities :MutableList<GroupEntity>){
-        if(isValid(group)){
-            var position = 0
-            for(i in 0 until group){
-                position += data[i].size
-            }
-            val groupItem = data[group]
-            val lastSize = groupItem.size
-            val newSize = entities.size
-            groupItem.clear()
-            groupItem.addAll(entities)
-            if(lastSize == newSize){
-                notifyItemRangeChanged(position,newSize)
-            }else{
-                total += newSize - lastSize
-                notifyDataSetChanged()
-            }
+        increaseCapacity(group)
+        var position = 0
+        for(i in 0 until group){
+            position += data[i].size
+        }
+        val groupItem = data[group]
+        val lastSize = groupItem.size
+        val newSize = entities.size
+        groupItem.clear()
+        groupItem.addAll(entities)
+        if(lastSize == newSize){
+            notifyItemRangeChanged(position,newSize)
+        }else{
+            total += newSize - lastSize
+            notifyDataSetChanged()
         }
     }
 
     fun removeEntity(group :Int){
-        if(isValid(group)){
-            var position = 0
-            for(i in 0..(group-1)){
-                position += data[i].size
-            }
-            val count = data[group].size
-            data[group].clear()
-            total -= count
-            notifyItemRangeRemoved(position,count)
+        increaseCapacity(group)
+        var position = 0
+        for(i in 0..(group-1)){
+            position += data[i].size
         }
+        val count = data[group].size
+        data[group].clear()
+        total -= count
+        notifyItemRangeRemoved(position,count)
     }
 
     /**
@@ -185,11 +155,10 @@ abstract class GroupAdapter() :RecyclerView.Adapter<GroupHolder<out Any>>(){
      * @param group 组号
      */
     fun getPositon(group: Int) :Int{
+        increaseCapacity(group)
         var position = 0
-        if(isValid(group)){
-            for(i in 0..(group-1)){
-                position += data[i].size
-            }
+        for(i in 0..(group-1)){
+            position += data[i].size
         }
         return position
     }
@@ -199,19 +168,14 @@ abstract class GroupAdapter() :RecyclerView.Adapter<GroupHolder<out Any>>(){
      * @param group 组号
      */
     fun getSize(group: Int):Int{
-        var size = 0
-        if(isValid(group)){
-            size = data[group].size
-        }
-        return size
+        increaseCapacity(group)
+        return data[group].size
     }
 
-    private fun isValid(group :Int):Boolean{
-        if(groupNo > 0 && group < groupNo && group >= 0){
-            return true
-        }else{
-            Log.w(TAG,"$group outof groupSize $groupNo")
-            return false
+    private fun increaseCapacity(group :Int){
+        val start = data.size
+        for(i in start .. group step 1){
+            data.add(ArrayList(8))
         }
     }
 
