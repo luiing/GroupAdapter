@@ -5,9 +5,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.uis.adsorbent.SingleAdsorbentListener
 import com.uis.groupadapter.GroupEntity
 import com.uis.groupadater.demo.holder.*
-import com.uis.groupadater.demo.adsorbent.SingleAdsorbentListener
 import kotlinx.android.synthetic.main.ui_demo.*
 import kotlinx.android.synthetic.main.ui_view_pin.view.*
 

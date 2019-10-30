@@ -70,7 +70,6 @@ class ViewPagerVH(parent: ViewGroup) : GroupHolder<String>(R.layout.ui_item_view
 
         viewpager.layoutParams = p
         viewpager.adapter = SimplePagerAdapter()
-
         viewpager.addOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener(){
             override fun onPageSelected(p0: Int) {
                 if(parent is RecyclerView){

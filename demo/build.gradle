@@ -22,6 +22,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
 }
 
 dependencies {
@@ -29,11 +30,11 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:'+androidx
     implementation 'androidx.recyclerview:recyclerview:'+androidx
     implementation 'androidx.legacy:legacy-support-v4:'+androidx
+    implementation 'com.google.android.material:material:'+androidx
+    implementation 'androidx.viewpager:viewpager:'+androidx
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    api 'com.facebook.fresco:fresco:1.13.0'
-    api 'com.facebook.fresco:imagepipeline-okhttp3:1.9.0'
-    api 'com.squareup.okhttp3:okhttp:3.12.1'
-    api project(':groupadapter')
-    api "com.uis:stretch:0.2.3"
+    api 'com.uis:adsorbent:0.3.2'
+    api 'com.uis:stretch:0.2.3'
+    implementation project(':groupadapter')
 }
