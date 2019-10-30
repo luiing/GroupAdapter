@@ -18,9 +18,9 @@ RecyclerView分组Adapter，数据异步或同步加入adapter后，**按照加�
 ![](/preview/001.png) ![](/preview/002.png) ![](/preview/003.png)
 
 ### USE by Kotlin
-    implementation 'com.uis:groupadapter:0.4.0
+    implementation 'com.uis:groupadapter:0.5.0
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation "com.android.support:recyclerview-v7:$supportVer"
+    implementation 'androidx.recyclerview:recyclerview:'+androidx
 
 ``` 项目中使用的是compileOnly,使用者需自行加入外部依赖库 ```
 
@@ -42,7 +42,6 @@ RecyclerView分组Adapter，数据异步或同步加入adapter后，**按照加�
         }
     }
     //数据装载就是如此任性
-    adapter.initGroup(3)//初始化分组，分组从0-2
     adapter.addEntity(1,GroupEntity(VT_TXT_LARGE,"large"))
 ```
 
@@ -51,9 +50,7 @@ RecyclerView分组Adapter，数据异步或同步加入adapter后，**按照加�
 
 
 ```
-fun initGroup(groupSize :Int)//初始化(重置)分组个数（默认为1组）
-
-fun addEntity(group :Int,entity :GroupEntity)//加入数据到第group个分组，group范围[0,groupSize-1]
+fun addEntity(group :Int,entity :GroupEntity)//加入数据到第group个分组
 
 fun removeEntity(group :Int)//移除分组数据
 
@@ -77,10 +74,11 @@ fun changePositionEntity(position: Int,entity: GroupEntity)//更新全局positio
 
 Version|Descipt|Fixed|Time
 ----|----|----|----
-0.1.0|初始版本| |2018/11/24
-0.2.0|增加删除函数| |2018/11/27
-0.3.0|默认初始化| |2018/11/28
-0.4.0|增加更新函数| fixed removePositonEntity|2019/4/24
+0.1.0|初始版本| |2018/11
+0.2.0|增加删除函数| |2018/11
+0.3.0|默认初始化| |2018/11
+0.4.0|增加更新函数| fixed removePositonEntity|2019/4
+0.5.0|支持自动扩容| 支持AndroidX|2019/10
 
 ### LICENSE
 MIT License
