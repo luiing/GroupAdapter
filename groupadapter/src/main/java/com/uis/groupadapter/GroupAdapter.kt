@@ -50,6 +50,18 @@ abstract class GroupAdapter: RecyclerView.Adapter<GroupHolder<out Any>>(){
         notifyItemRangeInserted(position,entities.size)
     }
 
+    fun addEntity(group :Int,subPosition:Int,entities :MutableList<GroupEntity>){
+        increaseCapacity(group)
+        var position = 0
+        for(i in 0 until group){
+            position += data[i].size
+        }
+        val subIndex = Math.min(subPosition,data[group].size)
+        data[group].addAll(subIndex,entities)
+        total += entities.size
+        notifyItemRangeInserted(position+subIndex,entities.size)
+    }
+
     /** 更新全局position位置
      * @param position 全局position
      */
@@ -113,13 +125,26 @@ abstract class GroupAdapter: RecyclerView.Adapter<GroupHolder<out Any>>(){
     fun removeEntity(group :Int){
         increaseCapacity(group)
         var position = 0
-        for(i in 0..(group-1)){
+        for(i in 0 until group){
             position += data[i].size
         }
         val count = data[group].size
         data[group].clear()
         total -= count
         notifyItemRangeRemoved(position,count)
+    }
+
+    fun removeEntity(group :Int,subPosition: Int){
+        increaseCapacity(group)
+        var position = 0
+        for(i in 0 until group){
+            position += data[i].size
+        }
+        if(subPosition >= 0 && subPosition < data[group].size){
+            data[group].removeAt(subPosition)
+            total -= 1
+            notifyItemRemoved(position+subPosition)
+        }
     }
 
     /**
@@ -157,7 +182,7 @@ abstract class GroupAdapter: RecyclerView.Adapter<GroupHolder<out Any>>(){
     fun getPositon(group: Int) :Int{
         increaseCapacity(group)
         var position = 0
-        for(i in 0..(group-1)){
+        for(i in 0 until group){
             position += data[i].size
         }
         return position

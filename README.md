@@ -57,11 +57,15 @@ RecyclerView分组Adapter，数据异步或同步加入adapter后，按照加入
 ```
 fun addEntity(group :Int,entity :GroupEntity)//加入数据到第group个分组
 
+fun addEntity(group :Int,subPosition:Int,entities :MutableList<GroupEntity>)//指定分组相对位置加入
+
 fun removeEntity(group :Int)//移除分组数据
 
-fun clearAllEntity()//移除所有数据
+fun removeEntity(group :Int,subPosition: Int)//指定分组相对位置移除一个数据
 
 fun removePositonEntity(positon: Int)//移出指定位置（RecyclerView中位置）
+
+fun clearAllEntity()//移除所有数据
 
 fun getPositon(group: Int)//获取该组开始position
 
@@ -72,6 +76,7 @@ fun changeEntity(group :Int,entities :MutableList<GroupEntity>)//替换组号下
 fun changeEntity(group: Int,entity: GroupEntity)//新组号下第0个位置数据，此组无数据不更新
 
 fun changePositionEntity(position: Int,entity: GroupEntity)//更新全局position位置
+
 ```
 
 
@@ -84,7 +89,7 @@ Version|Descipt|Fixed|Time
 0.3.0|默认初始化| |2018/11
 0.4.0|增加更新函数| fixed removePositonEntity|2019/4
 0.5.0|支持自动扩容| 支持AndroidX|2019/10
-
+0.5.1|操作指定分组指定位置数据| |2019/11
 ### LICENSE
 MIT License
 
