@@ -8,7 +8,7 @@ android {
     buildToolsVersion buildToolsVer
     defaultConfig {
         minSdkVersion minSdkVer
-        targetSdkVersion compileVer
+        targetSdkVersion targetVer
         versionCode 1
         versionName "1.0"
     }
@@ -22,8 +22,8 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    compileOnly "com.android.support:recyclerview-v7:$supportVer"
+    compileOnly 'androidx.recyclerview:recyclerview:'+androidx
     compileOnly "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
 
-//apply from: '../../bintray.gradle'
+//apply from: '../../../bintray.gradle'

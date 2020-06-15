@@ -8,10 +8,12 @@ android {
     defaultConfig {
         applicationId "com.uis.groupadater.demo"
         minSdkVersion minSdkVer
-        targetSdkVersion compileVer
+        targetSdkVersion targetVer
         versionCode 1
         versionName "1.0"
-
+        //ndk{
+             //abiFilters 'x86'//'armeabi-v7a'
+        //}
     }
 
     buildTypes {
@@ -25,9 +27,14 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.android.support:support-v4:'+supportVer
-    implementation 'com.android.support:appcompat-v7:'+supportVer
-    implementation 'com.android.support:recyclerview-v7:'+supportVer
+    implementation 'androidx.appcompat:appcompat:'+androidx
+    implementation 'androidx.recyclerview:recyclerview:'+androidx
+    implementation 'androidx.legacy:legacy-support-v4:'+androidx
+    implementation 'com.google.android.material:material:'+androidx
+    implementation 'androidx.viewpager:viewpager:'+androidx
+
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    api 'com.uis:adsorbent:0.3.2'
+    api 'com.uis:stretch:0.2.3'
     implementation project(':groupadapter')
 }
