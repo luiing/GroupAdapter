@@ -8,5 +8,5 @@ import androidx.recyclerview.widget.RecyclerView
 abstract class GroupHolder<T : Any> : RecyclerView.ViewHolder{
     constructor(view: View):super(view)
     constructor(layoutRes :Int,parent :ViewGroup):super(LayoutInflater.from(parent.context).inflate(layoutRes,parent,false))
-    fun bindVH(item: T){}
+    open fun bindVH(item: T){}
 }
