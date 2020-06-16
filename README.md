@@ -23,7 +23,7 @@ RecyclerView分组Adapter，数据异步或同步加入adapter后，按照加入
 ![](/preview/001.png) ![](/preview/002.png) ![](/preview/003.png)
 
 ### USE by Kotlin
-    implementation 'com.uis:groupadapter:0.5.0
+    implementation 'com.uis:groupadapter:0.5.2
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.recyclerview:recyclerview:'+androidx
 

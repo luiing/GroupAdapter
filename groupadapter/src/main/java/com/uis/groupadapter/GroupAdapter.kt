@@ -26,29 +26,20 @@ abstract class GroupAdapter: RecyclerView.Adapter<GroupHolder<out Any>>(){
      * 初始化或重置组,组号范围[0,size-1]
      * @param group 组号
      */
-    @Deprecated("not need method,it support auto increase capacity")
+    @Deprecated("deprecated", ReplaceWith("removeAllEntity()"))
     fun initGroup(size :Int){
-        clearAllEntity()
+        removeAllEntity()
     }
 
     fun addEntity(entity :GroupEntity) =addEntity(0,entity)
 
     fun addEntity(entities :MutableList<GroupEntity>) =addEntity(0,entities)
 
-    fun addEntity(group :Int,entity :GroupEntity){
-        addEntity(group, mutableListOf(entity))
-    }
+    fun addEntity(group :Int,entity :GroupEntity) = addEntity(group,-1, mutableListOf(entity))
 
-    fun addEntity(group :Int,entities :MutableList<GroupEntity>){
-        increaseCapacity(group)
-        var position = 0
-        for(i in 0..group){
-            position += data[i].size
-        }
-        data[group].addAll(entities)
-        total += entities.size
-        notifyItemRangeInserted(position,entities.size)
-    }
+
+    fun addEntity(group :Int,entities :MutableList<GroupEntity>) = addEntity(group,-1,entities);
+
 
     fun addEntity(group :Int,subPosition:Int,entities :MutableList<GroupEntity>){
         increaseCapacity(group)
@@ -56,7 +47,11 @@ abstract class GroupAdapter: RecyclerView.Adapter<GroupHolder<out Any>>(){
         for(i in 0 until group){
             position += data[i].size
         }
-        val subIndex = Math.min(subPosition,data[group].size)
+        val subIndex = if(-1 == subPosition){
+            data[group].size
+        }else {
+            Math.min(subPosition, data[group].size)
+        }
         data[group].addAll(subIndex,entities)
         total += entities.size
         notifyItemRangeInserted(position+subIndex,entities.size)
@@ -77,21 +72,23 @@ abstract class GroupAdapter: RecyclerView.Adapter<GroupHolder<out Any>>(){
         }
     }
 
-    fun changeEntity(entity: GroupEntity)=changeEntity(0,entity)
+    fun changeEntity(entity: GroupEntity)=changeEntity(0,0,entity)
 
     /** 更新组号下第0个位置数据，此组无数据不更新
      * @param group组号
      * @param entity
      */
-    fun changeEntity(group: Int,entity: GroupEntity){
+    fun changeEntity(group: Int,entity: GroupEntity) = changeEntity(group,0,entity)
+
+    fun changeEntity(group :Int,subPosition: Int,entity :GroupEntity){
         increaseCapacity(group)
         val gp = data[group]
-        if(gp.size > 0) {
+        if(gp.size > subPosition) {
             var position = 0
             for(i in 0 until group){
                 position += data[i].size
             }
-            gp.set(0,entity)
+            gp[subPosition] = entity
             notifyItemChanged(position)
         }
     }
@@ -164,15 +161,20 @@ abstract class GroupAdapter: RecyclerView.Adapter<GroupHolder<out Any>>(){
         }
     }
 
-    /**
-     * 清除所有数据
-     */
-    fun clearAllEntity(){
+    fun removeAllEntity(){
         total = 0
         for (item in data){
             item.clear()
         }
         notifyDataSetChanged()
+    }
+
+    /**
+     * 清除所有数据
+     */
+    @Deprecated("deprecated,replace removeAllEntity()", ReplaceWith("removeAllEntity()"))
+    fun clearAllEntity(){
+        removeAllEntity()
     }
 
     /**
