@@ -23,7 +23,7 @@ RecyclerView分组Adapter，数据异步或同步加入adapter后，按照加入
 ![](/preview/001.png) ![](/preview/002.png) ![](/preview/003.png)
 
 ### USE by Kotlin
-    implementation 'com.uis:groupadapter:0.5.3
+    implementation 'com.uis:groupadapter:0.5.5
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.recyclerview:recyclerview:'+androidx
 
@@ -90,6 +90,8 @@ Version|Descipt|Fixed|Time
 0.4.0|增加更新函数| fixed removePositonEntity|2019/4
 0.5.0|支持自动扩容| 支持AndroidX|2019/10
 0.5.1|操作指定分组指定位置数据| |2019/11
+0.5.5|增强指定分组指定位置数据| |2020/7
+
 ### LICENSE
 MIT License
 

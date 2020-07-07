@@ -83,13 +83,13 @@ abstract class GroupAdapter: RecyclerView.Adapter<GroupHolder<out Any>>(){
     fun changeEntity(group :Int,subPosition: Int,entity :GroupEntity){
         increaseCapacity(group)
         val gp = data[group]
-        if(gp.size > subPosition) {
+        if(gp.size > subPosition && subPosition > -1) {
             var position = 0
             for(i in 0 until group){
                 position += data[i].size
             }
             gp[subPosition] = entity
-            notifyItemChanged(position)
+            notifyItemChanged(position+subPosition)
         }
     }
 
